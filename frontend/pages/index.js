@@ -1,9 +1,9 @@
 import CountryList from '../components/CountryList';
 
-const Home = () => {
+const Home = ({ params }) => {
   return (
     <div>
-      <CountryList />
+      <CountryList params={params} />
     </div>
   );
 };

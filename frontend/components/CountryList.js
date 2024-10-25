@@ -30,7 +30,7 @@ const CountryList = () => {
       <ul>
         {countries.map((country) => (
           <li key={country.iso2}>
-            <Link href={`/country/${country.iso2}`}>{country.name}</Link>
+            <Link href={`/country/${country.countryCode}`}>{country.name}</Link>
           </li>
         ))}
       </ul>

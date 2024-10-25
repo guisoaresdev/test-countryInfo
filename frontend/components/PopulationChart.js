@@ -1,3 +1,4 @@
+// components/PopulationChart.js
 import { Chart, registerables } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -11,9 +12,7 @@ const PopulationChart = ({ populationData }) => {
     datasets: [
       {
         label: 'Population',
-        data: populationData
-          ? populationData.map((item) => item.population)
-          : [],
+        data: populationData ? populationData.map((item) => item.value) : [], // Mapeia o valor da população
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
       },
     ],

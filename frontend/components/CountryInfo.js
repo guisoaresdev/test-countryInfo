@@ -1,20 +1,17 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import PopulationChart from './PopulationChart';
 
-const CountryInfo = () => {
-  const router = useRouter();
-  const { code } = router.query;
+const CountryInfo = ({ countryCode }) => {
   const [countryInfo, setCountryInfo] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCountryInfo = async () => {
-      if (code) {
+      if (countryCode) {
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/countries/${code}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/countries/${countryCode}`,
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -31,7 +28,7 @@ const CountryInfo = () => {
     };
 
     fetchCountryInfo();
-  }, [code]);
+  }, [countryCode]);
 
   if (loading) return <p>Loading...</p>;
 
@@ -43,7 +40,7 @@ const CountryInfo = () => {
       <img
         src={countryInfo.flag}
         alt={`${countryInfo.commonName} flag`}
-        className="w-32 mb-4"
+        className="w-full max-w-xs mb-4"
       />
       <h2 className="text-xl font-semibold">Border Countries</h2>
       <ul className="list-disc pl-5 mb-4">
@@ -59,7 +56,9 @@ const CountryInfo = () => {
             </li>
           ))}
       </ul>
-      <PopulationChart populationData={countryInfo.populationData || []} />
+      <div className="w-full h-64 md:h-80">
+        <PopulationChart populationData={countryInfo.population || []} />
+      </div>
     </div>
   );
 };

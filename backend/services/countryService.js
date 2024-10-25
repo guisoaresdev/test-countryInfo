@@ -20,14 +20,17 @@ async function fetchCountryInfo(countryCode) {
 
   // Filtrar dados conforme necessário para o frontend
   const borders = borderData.data.borders
+
   const population = populationData.data.data.find(
     (country) => country.iso2 === countryCode,
   )
+  const populationCounts = population ? population.populationCounts : []
+
   const flag = flagData.data.data.find(
     (country) => country.iso2 === countryCode,
   )?.flag
 
-  return { borders, population, flag }
+  return { borders, population: populationCounts, flag }
 }
 
 module.exports = { fetchAvailableCountries, fetchCountryInfo }

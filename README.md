@@ -5,9 +5,11 @@ Install Dependencies:
 npm install
 ````
 
-Run the project:
+Commands:
 ````
-npm start
+npm start (Run server)
+npm run lint (Run ESLint)
+npm run format (Run Prettier)
 ````
 
 # Frontend
@@ -17,7 +19,9 @@ Install Dependencies:
 npm install
 ````
 
-Run the project:
+Commands:
 ````
-npm run dev
+npm run build (Build project)
+npm start (Run Project)
+npm run lint (Run Next Lint)
 ````

@@ -5,6 +5,11 @@ Install Dependencies:
 npm install
 ````
 
+Setup Environment Variables:
+````
+cp .env.example .env
+````
+
 Commands:
 ````
 npm start (Run server)
@@ -17,6 +22,10 @@ npm run format (Run Prettier)
 Install Dependencies:
 ````
 npm install
+````
+Setup Environment Variables:
+````
+cp .env.example .env
 ````
 
 Commands:

@@ -1,4 +1,3 @@
-// components/PopulationChart.js
 import { Chart, registerables } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -6,19 +5,22 @@ import { Bar } from 'react-chartjs-2';
 Chart.register(...registerables);
 
 const PopulationChart = ({ populationData }) => {
-  // Certifique-se de que populationData é um array e não nulo
-  const data = {
-    labels: populationData ? populationData.map((item) => item.year) : [],
+  const chartData = {
+    labels: populationData.map((data) => data.year), // Extraindo os anos
     datasets: [
       {
-        label: 'Population',
-        data: populationData ? populationData.map((item) => item.value) : [], // Mapeia o valor da população
+        label: 'População',
+        data: populationData.map((data) => data.value), // Extraindo os valores populacionais
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
       },
     ],
   };
 
-  return <Bar data={data} />;
+  return (
+    <div>
+      <Bar data={chartData} />
+    </div>
+  );
 };
 
 export default PopulationChart;

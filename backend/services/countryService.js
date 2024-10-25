@@ -10,45 +10,37 @@ async function fetchAvailableCountries() {
 }
 
 async function fetchCountryInfo(countryCode) {
-  const [borderData, flagData, countryInfoData] = await Promise.all([
-    axios.get(`${BASE_URL_DATE_NAGER}/CountryInfo/${countryCode}`),
-    axios.get(`${BASE_URL_COUNTRIES_NOW}/countries/flag/images`),
-    axios.get(`${BASE_URL_DATE_NAGER}/AvailableCountries`),
-  ])
+  try {
+    // Primeira chamada para obter os dados do país, incluindo o `commonName`
+    const countryDataResponse = await axios.get(
+      `${BASE_URL_DATE_NAGER}/CountryInfo/${countryCode}`,
+    )
+    const { commonName, borders } = countryDataResponse.data
 
-  const borders = borderData.data.borders
-
-  // Obter o nome do país a partir da resposta de AvailableCountries
-  const countryInfo = countryInfoData.data.find(
-    (country) => country.alpha2Code === countryCode,
-  )
-  const countryName = countryInfo ? countryInfo.name : ''
-
-  // Fazer a requisição para a API de população usando o nome do país
-  let populationCounts = []
-  if (countryName) {
-    const populationResponse = await axios.post(
+    // Requisição de população usando o `commonName` como o atributo `country`
+    const populationData = await axios.post(
       `${BASE_URL_COUNTRIES_NOW}/countries/population`,
       {
-        country: countryName, // Usando o nome do país na requisição
+        country: commonName,
       },
     )
 
-    // Extraindo dados populacionais
-    const populationData = populationResponse.data.data.find(
-      (country) => country.country === countryName, // Verifique se a estrutura está correta
+    // Encontrar os dados de população e extrair a lista de `populationCounts`
+    const populationCounts = populationData.data.data.populationCounts || []
+
+    // Requisição para obter o link da bandeira do país
+    const flagDataResponse = await axios.get(
+      `${BASE_URL_COUNTRIES_NOW}/countries/flag/images`,
     )
+    const flag = flagDataResponse.data.data.find(
+      (country) => country.iso2 === countryCode,
+    )?.flag
 
-    if (populationData) {
-      populationCounts = populationData.populationCounts
-    }
+    return { borders, population: populationCounts, flag }
+  } catch (error) {
+    console.error('Erro ao buscar informações do país:', error.message)
+    throw error
   }
-
-  const flag = flagData.data.data.find(
-    (country) => country.iso2 === countryCode,
-  )?.flag
-
-  return { borders, population: populationCounts, flag }
 }
 
 module.exports = { fetchAvailableCountries, fetchCountryInfo }

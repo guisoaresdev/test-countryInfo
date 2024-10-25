@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import PopulationChart from './PopulationChart';
 
@@ -36,11 +35,9 @@ const CountryInfo = ({ countryCode }) => {
   return (
     <div className="container mx-auto px-4">
       <h1 className="text-3xl font-bold mb-4">{countryInfo.commonName}</h1>
-      <Image
+      <img
         src={countryInfo.flag}
         alt={`${countryInfo.commonName} flag`}
-        width={400}
-        height={250}
         className="w-full max-w-xs mb-4"
       />
       <h2 className="text-xl font-semibold">Border Countries</h2>

@@ -3,7 +3,6 @@ const {
   fetchCountryInfo,
 } = require('../services/countryService')
 
-// Controlador para listar os países
 async function getAvailableCountries(req, res) {
   try {
     const countries = await fetchAvailableCountries()
@@ -16,7 +15,6 @@ async function getAvailableCountries(req, res) {
   }
 }
 
-// Controlador para informações detalhadas do país
 async function getCountryInfo(req, res) {
   const { countryCode } = req.params
   try {

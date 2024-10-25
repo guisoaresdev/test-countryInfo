@@ -11,13 +11,11 @@ async function fetchAvailableCountries() {
 
 async function fetchCountryInfo(countryCode) {
   try {
-    // Primeira chamada para obter os dados do país, incluindo o `commonName`
     const countryDataResponse = await axios.get(
       `${BASE_URL_DATE_NAGER}/CountryInfo/${countryCode}`,
     )
     const { commonName, borders } = countryDataResponse.data
 
-    // Requisição de população usando o `commonName` como o atributo `country`
     const populationData = await axios.post(
       `${BASE_URL_COUNTRIES_NOW}/countries/population`,
       {
@@ -25,10 +23,8 @@ async function fetchCountryInfo(countryCode) {
       },
     )
 
-    // Encontrar os dados de população e extrair a lista de `populationCounts`
     const populationCounts = populationData.data.data.populationCounts || []
 
-    // Requisição para obter o link da bandeira do país
     const flagDataResponse = await axios.get(
       `${BASE_URL_COUNTRIES_NOW}/countries/flag/images`,
     )
@@ -38,7 +34,7 @@ async function fetchCountryInfo(countryCode) {
 
     return { borders, population: populationCounts, flag }
   } catch (error) {
-    console.error('Erro ao buscar informações do país:', error.message)
+    console.error('Error when searching for country data:', error.message)
     throw error
   }
 }
